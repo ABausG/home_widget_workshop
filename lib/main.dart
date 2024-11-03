@@ -50,7 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
     await HomeWidget.saveWidgetData<int>('counter', newValue);
 
     // Update Homescreen Widget
-    await HomeWidget.updateWidget(name: 'WorkshopWidget');
+    await HomeWidget.updateWidget(
+      name: 'WorkshopWidget',
+      iOSName: 'WorkshopWidget',
+    );
 
     if (mounted) {
       setState(() {
