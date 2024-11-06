@@ -31,6 +31,7 @@ struct Provider: TimelineProvider {
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let counter: Int
+    var imagePath: String? = nil
 }
 
 struct WorkshopWidgetEntryView : View {
