@@ -43,6 +43,12 @@ struct WorkshopWidgetEntryView : View {
             Text("You have pressed the button this many times:")
 
             Text(entry.counter.description)
+            if let imagePath = entry.imagePath, 
+                let uiImage = UIImage(contentsOfFile: imagePath) {
+                Image(uiImage: uiImage)
+            } else {
+                EmptyView()
+            }
         }
     }
 }
