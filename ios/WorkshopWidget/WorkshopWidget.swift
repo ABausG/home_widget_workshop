@@ -16,7 +16,8 @@ struct Provider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let userDefaults = UserDefaults(suiteName: "group.es.antonborri.homeWidgetWorkshop.workshopWidget")
         let counter = userDefaults?.integer(forKey: "counter") ?? 0
-        let entry = SimpleEntry(date: Date(), counter: counter)
+        let imagePath = userDefaults?.string(forKey: "dash")
+        let entry = SimpleEntry(date: Date(), counter: counter, imagePath: imagePath)
         completion(entry)
     }
 
