@@ -1,6 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 
+@pragma('vm:entry-point')
+Future<void> homeWidgetInteractivityCallback(Uri? uri) async {
+  // Set App Group Id for iOS
+  await HomeWidget.setAppGroupId(
+    'group.es.antonborri.homeWidgetWorkshop.workshopWidget',
+  );
+
+  // Get Data from home_widget
+  final counterValue = await HomeWidget.getWidgetData<int>(
+    'counter',
+    defaultValue: 0,
+  );
+  final newValue = counterValue! + 1;
+
+  // Store Data in home_widget
+  await HomeWidget.saveWidgetData<int>('counter', newValue);
+
+  // Update Homescreen Widget
+  await HomeWidget.updateWidget(
+    name: 'WorkshopWidget',
+    iOSName: 'WorkshopWidget',
+  );
+}
+
 void main() {
   runApp(const MyApp());
 }
@@ -37,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _renderButtonToHomeWidget();
+    HomeWidget.registerInteractivityCallback(homeWidgetInteractivityCallback);
   }
 
   Future<void> _incrementCounter() async {
