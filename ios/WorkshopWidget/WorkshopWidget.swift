@@ -45,7 +45,12 @@ struct WorkshopWidgetEntryView : View {
             Text(entry.counter.description)
             if let imagePath = entry.imagePath, 
                 let uiImage = UIImage(contentsOfFile: imagePath) {
-                Image(uiImage: uiImage)
+                Button(
+                    intent: BackgroundIntent(
+                        url: URL(string: "homeWidgetWorkshop://increment"),
+                        appGroup: "group.es.antonborri.homeWidgetWorkshop.workshopWidget")) {
+                            Image(uiImage: uiImage)
+                }
             } else {
                 EmptyView()
             }
