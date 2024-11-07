@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,10 +33,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int? _counter;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter = (_counter ?? 0) + 1;
-    });
+  Future<void> _incrementCounter() async {
+    // Get Data from home_widget
+    final counterValue = await HomeWidget.getWidgetData<int>(
+      'counter',
+      defaultValue: 0,
+    );
+    final newValue = counterValue! + 1;
+
+    // Store Data in home_widget
+    await HomeWidget.saveWidgetData<int>('counter', newValue);
+
+    // Update Homescreen Widget
+    await HomeWidget.updateWidget(name: 'WorkshopWidget');
+
+    if (mounted) {
+      setState(() {
+        _counter = newValue;
+      });
+    }
   }
 
   @override
