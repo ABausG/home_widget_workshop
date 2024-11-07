@@ -34,6 +34,11 @@ class _MyHomePageState extends State<MyHomePage> {
   int? _counter;
 
   Future<void> _incrementCounter() async {
+    // Set App Group Id for iOS
+    await HomeWidget.setAppGroupId(
+      'group.es.antonborri.homeWidgetWorkshop.workshopWidget',
+    );
+
     // Get Data from home_widget
     final counterValue = await HomeWidget.getWidgetData<int>(
       'counter',
@@ -45,7 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
     await HomeWidget.saveWidgetData<int>('counter', newValue);
 
     // Update Homescreen Widget
-    await HomeWidget.updateWidget(name: 'WorkshopWidget');
+    await HomeWidget.updateWidget(
+      name: 'WorkshopWidget',
+      iOSName: 'WorkshopWidget',
+    );
 
     if (mounted) {
       setState(() {
