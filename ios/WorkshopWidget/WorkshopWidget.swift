@@ -16,7 +16,8 @@ struct Provider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let userDefaults = UserDefaults(suiteName: "group.es.antonborri.homeWidgetWorkshop.workshopWidget")
         let counter = userDefaults?.integer(forKey: "counter") ?? 0
-        let entry = SimpleEntry(date: Date(), counter: counter)
+        let imagePath = userDefaults?.string(forKey: "dash")
+        let entry = SimpleEntry(date: Date(), counter: counter, imagePath: imagePath)
         completion(entry)
     }
 
@@ -31,6 +32,7 @@ struct Provider: TimelineProvider {
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let counter: Int
+    var imagePath: String? = nil
 }
 
 struct WorkshopWidgetEntryView : View {
@@ -41,6 +43,12 @@ struct WorkshopWidgetEntryView : View {
             Text("You have pressed the button this many times:")
 
             Text(entry.counter.description)
+            if let imagePath = entry.imagePath, 
+                let uiImage = UIImage(contentsOfFile: imagePath) {
+                Image(uiImage: uiImage)
+            } else {
+                EmptyView()
+            }
         }
     }
 }

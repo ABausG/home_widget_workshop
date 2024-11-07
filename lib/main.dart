@@ -33,6 +33,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int? _counter;
 
+  @override
+  void initState() {
+    super.initState();
+    _renderButtonToHomeWidget();
+  }
+
   Future<void> _incrementCounter() async {
     // Set App Group Id for iOS
     await HomeWidget.setAppGroupId(
@@ -60,6 +66,33 @@ class _MyHomePageState extends State<MyHomePage> {
         _counter = newValue;
       });
     }
+  }
+
+  Future<void> _renderButtonToHomeWidget() async {
+    final myWidget = Center(
+      child: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.flutter_dash),
+      ),
+    );
+
+    // Set App Group Id for iOS
+    await HomeWidget.setAppGroupId(
+      'group.es.antonborri.homeWidgetWorkshop.workshopWidget',
+    );
+
+    // Render Widget
+    await HomeWidget.renderFlutterWidget(
+      myWidget,
+      key: 'dash',
+      logicalSize: const Size.square(100),
+    );
+
+    // Update Homescreen Widget
+    await HomeWidget.updateWidget(
+      name: 'WorkshopWidget',
+      iOSName: 'WorkshopWidget',
+    );
   }
 
   @override
